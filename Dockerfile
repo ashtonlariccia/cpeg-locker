@@ -1,6 +1,7 @@
 FROM php:8.3-cli
 
-RUN docker-php-ext-install pdo_sqlite
+# The official image already ships pdo_sqlite; fail the build early if that ever changes.
+RUN php -m | grep -qi '^pdo_sqlite$'
 
 WORKDIR /app
 COPY . .
